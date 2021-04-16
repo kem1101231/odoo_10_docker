@@ -88,10 +88,13 @@ RUN apt-get update \
 	&& wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.1/wkhtmltox-0.12.1_linux-trusty-amd64.deb \
 	&& dpkg -i wkhtmltox-0.12.1_linux-trusty-amd64.deb \
 	&& cp /usr/local/bin/wkhtmltoimage /usr/bin/wkhtmltoimage \
-	&& cp /usr/local/bin/wkhtmltopdf /usr/bin/wkhtmltopdf 
+	&& cp /usr/local/bin/wkhtmltopdf /usr/bin/wkhtmltopdf \
+	&& mkdir /opt/odoo/external_addons 
 
-COPY ./odoo-server.conf /etc/odoo/
-COPY ./odoo-server.service /lib/systemd/system/
+COPY ./compose_config/odoo-server.conf /etc/odoo/
+COPY ./compose_config/odoo-server.service /lib/systemd/system/
+COPY ./external_addons/. /opt/odoo/external_addons/
+
 
 RUN chmod 755 /lib/systemd/system/odoo-server.service \
     	&& chown root: /lib/systemd/system/odoo-server.service \
@@ -100,6 +103,9 @@ RUN chmod 755 /lib/systemd/system/odoo-server.service \
     	&& chown odoo: /etc/odoo/odoo-server.conf \
     	&& chmod 640 /etc/odoo/odoo-server.conf
 
+RUN pip install -r /opt/odoo/external_addons/requirements.txt
+
+USER odoo
 
 CMD ["python /opt/odoo/odoo-10.0/odoo-bin -c /etc/odoo/odoo-server.conf"]
 
