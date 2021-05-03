@@ -2,8 +2,8 @@
 
 To add apps and modules as external addons:
 
-1. Copy all apps and modules you wish to add.
-2. Update "requirements.txt" and add all python libraries needed by your apps and modules then save.
+1. Copy all apps and modules you wish to add to "external_apps" folder.
+2. Update "requirements.txt" inside the "external_apps" folder and add all python libraries needed by your apps and modules then save.
 
 
 To run Odoo on Docker
