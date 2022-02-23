@@ -1,11 +1,11 @@
-version: "3.9"
+version: "4.3"
    
 services:
   postgres_odoo:
     image: postgres:13.4
     volumes:
       - ./data/db:/var/lib/postgresql/data
-      - ./pg_backups:./backups
+      - ./pg_backups:/backups
     environment:
       - POSTGRES_DB=odoo
       - POSTGRES_USER=odoo
